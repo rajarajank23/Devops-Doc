@@ -1,0 +1,36 @@
+ubuntu@ip-172-31-27-196:/etc/nginx/sites-available$ cat ssl.conf
+server {
+
+
+        root /var/www/html/myproject;
+
+
+        server_name test.rithvik.shop www.test.rithvik.shop;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/test.rithvik.shop/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/test.rithvik.shop/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = test.rithvik.shop) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+        listen 80;
+        listen [::]:80;
+
+
+        server_name test.rithvik.shop www.test.rithvik.shop;
+    return 404; # managed by Certbot
+
+
+}

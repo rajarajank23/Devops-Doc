@@ -1,0 +1,182 @@
+---
+
+- name: This playbook is to copy a file
+  hosts: all
+  become:true
+  tasks:
+   - name: copy a file
+     copy:
+       src: /home/ansadmin/index.html
+       dest: /home/ansadmin
+       mode: 0600
+       owner: username of the nodes
+
+------------------------------------------------
+
+ansible-playbook file.yml -->run the playbook cmd
+
+ansible-playbook file.yml --check ---> verify the playbook status whether its correct or not 
+
+----------------------------------------------------
+Multiple service can run the file
+
+- name: This playbook install httpd
+  hosts: all
+  become: true
+  tasks:
+   - name: installing httpd
+     yum:
+       name: httpd
+       state: installed or present ---> whatever you given here
+       
+- name: starting service
+  service: 
+    name: httpd
+    state: started
+
+-------------------------------------
+
+uninstall the package
+
+
+
+- name: This playbook install httpd
+  hosts: all
+  become:true
+  tasks:
+
+   - name: stopping service
+     service:
+       name: stopping service
+       state: uninstalled 
+
+  - name: uninstalling httpd
+    yum: 
+     name: httpd
+     state: removed
+
+---------------------------------------------------
+
+---
+
+- name: This playbook installs httpd
+  hosts: all
+  become: true
+  tasks:
+
+- name: Installing httpd
+  yum:
+  name: httpd
+  state: installed
+  notify: starting service
+
+handlers:
+-name: starting service
+  service:
+    name: httpd
+    state: started
+
+1.Task package and handler service
+2.if any changes in the package it can affect service other wise no issues
+3.handler means its call the service i.e task call the  handler
+----------------------------------------------------------------------------
+Using when condition 
+
+---
+- name: This playbook installs httpd
+  hosts: all
+  become: true
+
+  tasks:
+- name: installing httpd package
+  yum:
+    name: httpd
+    state: installed
+    when: ansible_os_family =="Redhat";
+
+- name: starting httpd service
+  service:
+    name: httpd
+    state: started
+    when: ansible_os_family =="Redhat";
+
+- name: installing apache2 package
+  apt:
+    name: httpd
+    state: present
+    when: ansible_os_family =="Debian";
+
+- name: installing apache2 package
+  apt:
+    name: httpd
+    state: installed
+    when: ansible_os_family =="Debian";
+
+- name: copy index.html file
+  copy:
+   src: /home/ansadmin/index.html
+   dest: /var/www/html
+   mode: 0666
+
+-------------------------------------
+Multiple packages installation
+
+---
+
+- name: This playbook installs multiple packages
+  hosts:webservers
+  become: yes
+  tasks:
+  - name: installing multiple packages
+    yum:
+     name:{'git','make','mysql','docker','tree','which','wget'}
+      state: installed
+
+we can use single and double quotes
+
+user create 
+
+---
+
+- name: This playbook is to create user
+  hosts: webservers
+  become:
+  vars:
+   users: sunny
+tasks:
+- name: create user {{user}}
+  user:
+   name:"{{user}}"
+
+
+---
+
+- name: This playbook is to create user
+  hosts: webservers
+  become:
+  vars_files:
+   users.yml
+tasks:
+- name: create user {{user}}
+  user:
+   name:"{{user}}"
+
+create a file vi user.yml
+
+user: deepika
+
+variable user name declared into different yml file
+
+run the yml file ansible-playbook file.yml -e "user=raja" this is one of the way to create a user 
+
+ansible-playbook file.yml --extra-vars "user=vikram"
+ 
+E-extra variable 
+--------------------------------------------------------------------------------------------------------
+
+install tomcat
+
+.war---> web arch
+.jar---> java arch
+
+war file can't run directly in the ec2 that's why we install tomcat and create environment then war file will work.

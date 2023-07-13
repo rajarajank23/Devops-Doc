@@ -1,0 +1,20 @@
+
+docker exec -it <container_name> ls -l /usr/bin/supervisorctl
+
+docker exec -it <container_name> apt-get install supervisor
+
+docker exec -it <container_name> echo $PATH
+
+docker exec -it <container_name> export PATH=$PATH:/path/to/supervisorctl
+
+docker exec -it <container_name> unset PATH
+
+mvn install -Dmaven.plugin.validation=VERBOSE
+
+docker run -d  --name webapache -p 8070:80 webapp
+
+docker run -d -p <host_port>:<container_port> --name <container_name> <image_name>
+
+docker run -d -p ubuntuapp 8070:80 webapp
+
+sudo apt-get install certbot python3-certbot-apache

@@ -1,0 +1,22 @@
+create this file in the base machine
+vi Dockerfile
+FROM ubuntu
+WORKDIR /tmp
+RUN echo "Hello_World" > /tmp/testfile
+ENV myname raja
+COPY testfile1 /tmp
+ADD test.tar.gz /tmp
+
+Note: Purpose of this file is file copy from base machine to docker container
+
+Before run this cmd we should follow a few instructions given below
+
+[root@docker-test ~]# touch testfile1
+[root@docker-test ~]# touch test
+[root@docker-test ~]# tar -cvf test.tar test
+test
+[root@docker-test ~]# gzip test.tar 
+[root@docker-test ~]# lls
+-bash: lls: command not found
+[root@docker-test ~]# ls
+Dockerfile  rajafile  test  test.tar.gz  testfile1

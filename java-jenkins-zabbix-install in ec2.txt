@@ -1,0 +1,79 @@
+apt update
+apt install default-jdk
+java -version
+
+find /usr/lib/jvm/java-1.8* | head -n 3
+
+vi .bashrc or .profile
+JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+export JAVA_HOME
+export PATH=$PATH:$JAVA_HOME/bin
+Note: reboot the server then check the below cmd.
+export JAVA_HOME
+
+[ec2-user@ip-172-31-9-172 ~]$ sudo find /usr/lib/jvm/java-1.8* | head -n 3
+/usr/lib/jvm/java-1.8.0
+/usr/lib/jvm/java-1.8.0-amazon-corretto
+/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64
+
+vi .bash_profile
+
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64*
+PATH=$PATH:$HOME/bin:$JAVA_HOME
+
+quit and save then logout
+
+[ec2-user@ip-172-31-9-172 ~]$ sudo echo $JAVA_HOME
+/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64
+
+
+/usr/lib/jvm/java-11-openjdk-amd64
+/usr/lib/jvm/java-11-openjdk-amd64/legal
+/usr/lib/jvm/java-11-openjdk-amd64/legal/jdk.dynalink
+
+
+export PATH="/usr/bin:$PATH"
+--------------------------------------------------------------------------------
+vi .bashrc or .profile
+JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+export JAVA_HOME
+export PATH=$PATH:$JAVA_HOME/bin
+-------------------------------------------------------------------------------------
+mvn install -Dmaven.plugin.validation=VERBOSE
+
+apt install openjdk-8-jdk
+
+https://itslinuxfoss.com/install-apache-tomcat-server-ubuntu-22-04/ (tomcat installation)
+
+
+https://youtu.be/KHnQ0n4deqI(jenkins)
+
+https://youtu.be/jDpkLpJNmyI(java environment creation)
+
+https://youtu.be/C0W4Y8FSb2g(jenkins installation)
+
+https://launchpad.net/~linuxuprising/+archive/ubuntu/java/+packages?field.name_filter=&field.status_filter=&field.series_filter=jammy
+
+
+https://phoenixnap.com/kb/install-maven-on-ubuntu
+
+------------------------------------------------------------------------------------------------------
+
+zabbix installation:
+
+https://youtu.be/Y3O6-X-Zb18 
+
+https://www.youtube.com/watch?v=Y3O6-X-Zb18&ab_channel=DmitryLambert
+
+https://bestmonitoringtools.com/zabbix-alerts-setup-zabbix-email-notifications-escalations/
+
+
+https://serverfault.com/questions/1094952/zabbix-send-email-to-only-one-user
+
+https://www.zabbix.com/documentation/current/en/manual/config/notifications/media
+
+https://www.youtube.com/watch?v=wkdw66k-1Dg&ab_channel=Zabbix
+
+https://www.youtube.com/watch?v=cW948tF0THg&ab_channel=DmitryLambert
+
+https://www.linode.com/docs/guides/linux-users-and-groups/

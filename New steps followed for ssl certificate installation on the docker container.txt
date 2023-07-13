@@ -1,0 +1,59 @@
+apt-get install certbot python3-certbot-apache
+
+certbot --apaceh
+
+root@test:/etc/letsencrypt/live# cd /etc/apache2/sites-available/
+root@test:/etc/apache2/sites-available# ll
+total 16
+drwxr-xr-x 2 root root 4096 Jun 22 21:43 ./
+drwxr-xr-x 8 root root 4096 Jun 22 21:43 ../
+-rw-r--r-- 1 root root  760 Jun 22 21:43 ssl-le-ssl.conf
+-rw-r--r-- 1 root root  566 Jun 22 21:43 ssl.conf
+root@test:/etc/apache2/sites-available# cat ssl.conf
+<VirtualHost *:80>
+  servername test.rithvik.shop
+
+  ProxyPass / http://localhost:8070
+  ProxyPassReverse / http://localhost:8070/
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =test.rithvik.shop
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+
+
+
+<VirtualHost *:80>
+  servername btx1.rithvik.shop
+
+  ProxyPass / http://localhost:8070
+  ProxyPassReverse / http://localhost:8070/
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =btx1.rithvik.shop
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+
+root@test:/etc/apache2/sites-available# cat ssl-le-ssl.conf
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+  servername test.rithvik.shop
+  ProxyPass / http://172.31.33.145:8070/
+  ProxyPassReverse / http://172.31.33.145:8070/
+
+SSLCertificateFile /etc/letsencrypt/live/test.rithvik.shop-0002/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/test.rithvik.shop-0002/privkey.pem
+Include /etc/letsencrypt/options-ssl-apache.conf
+</VirtualHost>
+</IfModule>
+
+
+
+
+<VirtualHost *:443>
+  servername btx1.rithvik.shop
+  ProxyPass / http://172.31.33.145:8078/
+  ProxyPassReverse / http://172.31.33.145:8078/
+SSLCertificateFile /etc/letsencrypt/live/btx1.rithvik.shop-0002/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/btx1.rithvik.shop-0002/privkey.pem
+Include /etc/letsencrypt/options-ssl-apache.conf
+</VirtualHost>
+root@test:/etc/apache2/sites-available#

@@ -1,0 +1,22 @@
+git remote add origin https://github.com/rajarajank23/mypro.git
+git branch -M main
+git push -u origin main
+
+
+
+
+rsync -avzu -e '  ssh -p 22 -o StrictHostKeyChecking=no'
+
+rsync -avz htmlrepo ubuntu@13.54.40.254:/var/www/html 
+
+
+rsync -avzu -e '  ssh -p 22 -o StrictHostKeyChecking=no' htmlrepo ubuntu@13.54.40.254:/var/www/html
+
+
+
+
+
+rm -rf htmlrepo
+git clone --single-branch --branch test-html --depth=1 https://github.com/rajarajank23/htmlrepo.git
+cd htmlrepo
+rsync -avzr --update -e "ssh -v -o StrictHostKeyChecking=no" $WORKSPACE/htmlrepo/ ubuntu@3.106.114.232:/home/ubuntu/html

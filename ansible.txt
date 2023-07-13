@@ -1,0 +1,129 @@
+    1  yum updtae
+    2  yum update
+    3  yum install wget
+    4  wget http://dl.fedoraproject.org/pub/epel-release-latest-7.noarch.rpm
+    5  yum install epel-release-latest-7.noarch.rpm
+    6  clear
+    7  yum install git python python-devel python-pip openssl ansible -y
+    8  ansible --vsersion
+    9  ansible --version
+   10  sudo amazon-linux-extras install ansible2
+   11  ansible --version
+   12  vi /etc/ansible/hosts
+   13  vi /etc/ansible/ansible.cfg
+   14  adduser ansadmin
+   15  passwd ansadmin
+   16  visudo
+   17  su - ansadmin
+   18  vi /etc/ssh/sshd_config
+   19  systemctl restart sshd
+   20  ssh 172.31.41.56
+   21  su - ansadmin
+   22  ssh 172.31.41.56
+   23  ssh 172.31.38.117
+   24  sudo ssh 172.31.38.117
+   25  su - ansadmin
+   26  clear
+   27  visudo
+   28  vi /etc/ssh/sshd_config
+   29  systemctl restart sshd
+   30  ssh 172.31.38.117
+   31  su - ansadmin
+   32  vi /etc/ssh/sshd_config
+   33  systemctl restart sshd
+   34  ssh [ansadmin@ip-172-31-43-48 ~]$
+   35  ssh ansadmin@172.31.38.117
+   36  ssh ansadmin@172.31.41.56
+   37  su - ansadmin
+   38  poweroff
+   39  vi create_user.yml
+   40  ansible-playbook create_user.yml
+   41  su - ansadmin
+   42  history
+[root@ip-172-31-43-48 ~]# su - ansadmin
+Last login: Tue Oct 11 19:01:47 UTC 2022 on pts/0
+[ansadmin@ip-172-31-43-48 ~]$ ll
+total 20
+-rw-rw-r-- 1 ansadmin ansadmin 147 Oct 11 19:25 create_user_again.yml
+-rw-rw-r-- 1 ansadmin ansadmin 154 Oct 11 19:33 create_user_oncemore.yml
+-rw-rw-r-- 1 ansadmin ansadmin  68 Oct 11 19:05 create_user.yml
+-rw-rw-r-- 1 ansadmin ansadmin 175 Oct 11 19:39 install_packages.yml
+-rw-rw-r-- 1 ansadmin ansadmin 178 Oct 11 19:46 packages.yml
+[ansadmin@ip-172-31-43-48 ~]$ history
+    1  sudo yum install tree -y
+    2  exit
+    3  ssh-keygen
+    4  ll
+    5  cd /home/ansadmin/
+    6  ll
+    7  cd .ssh/
+    8  ll
+    9  cat id_rsa.pub
+   10  ssh 172.31.38.117
+   11  ssh 172.31.38.56
+   12  exit
+   13  ll
+   14  cd /home/
+   15  ll
+   16  ad ansadmin/
+   17  cd ansadmin/
+   18  ll
+   19  ls -al
+   20  exit
+   21  ssh 172.31.38.117
+   22  ll
+   23  cd /home/ansadmin/
+   24  ll
+   25  ls al
+   26  ls -al
+   27  ssh 172.31.38.117
+   28  ssh ansadmin@172.31.38.117
+   29  exit
+   30  cd /home/ansadmin/
+   31  cd .ssh/
+   32  ll
+   33  ssh-copy-id ansadmin@172.31.41.56
+   34  ssh-copy-id ansadmin@172.31.38.117
+   35  cd
+   36  ssh 172.31.38.117
+   37  exit
+   38  vi create_user.yml
+   39  ansible-playbook create_user.yml
+   40  vi create_user.yml
+   41  ansible-playbook create_user.yml
+   42  vi create_user.yml
+   43  ansible-playbook create_user.yml
+   44  cp create_user.yml create_user_again.yml
+   45  vi create_user_again.yml
+   46  ansible-playbook create_user_again.yml
+   47  vi create_user_again.yml
+   48  ansible-playbook create_user_again.yml
+   49  vi create_user_again.yml
+   50  ansible-playbook create_user_again.yml
+   51  cd /etc/ansible/
+   52  ll
+   53  vi ansible.cfg
+   54  vi hosts
+   55  cd
+   56  vi create_user_again.yml
+   57  ansible-playbook create_user_again.yml
+   58  vi create_user_again.yml
+   59  ansible-playbook create_user_again.yml
+   60  cp create_user_again.yml create_user_oncemore.yml
+   61  vi create_user_oncemore.yml
+   62  ansible-playbook create_user_oncemore.yml
+   63  vi create_user_oncemore.yml
+   64  ansible-playbook create_user_oncemore.yml
+   65  cp create_user_again.yml install_packages.yml
+   66  vi install_packages.yml
+   67  ansible-playbook install_packages.yml
+   68  cp install_packages.yml packages.yml
+   69  vi packages.yml
+   70  ansible-playbook --check
+   71  ansible-playbook packages.yml
+   72  ansible-playbook packages.yml -b
+   73  poweroff
+   74  sudo poweroff
+   75  ll
+   76  history
+[ansadmin@ip-172-31-43-48 ~]$

@@ -1,0 +1,35 @@
+running container view:
+
+docker ps -a
+
+docker-compose --version
+
+Login into container:
+
+docker exec -it containername /bin/bash --->using this cmd there is no root previleged
+
+docker exec -u 0 -it containername /bin/bash --->using this cmd root previlege will be there
+
+docker-compose up --->single dockerised file using this cmd
+
+docker-compose -f up file name -----> two or three dockerised file run using this cmd
+
+docker-compose up --build --->dockerised file any changes you did means using this cmd
+
+docker-compose up -d --build
+
+    1 docker ps -a
+    2  docker start 9116a5ee285a
+    3  docker exec -it 9116a5ee285a /bin/bash
+    4  exit
+    5  docker ps -a
+    6  docker inspect 9aa33cdc7b1c
+    7  docker exec -it  9aa33cdc7b1c ip a
+    8  docker exec -it 9aa33cdc7b1c ip a
+    9  docker exec -u 0 -it 9aa33cdc7b1c /bin/bash
+   10  docker ps
+   11  docker logs 9aa33cdc7b1c --details
+   12  docker logs 9aa33cdc7b1c -n 10
+   13  docker commit -p containername filename
+   14  docker save -o filename.tar filename
+

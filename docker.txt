@@ -1,0 +1,30 @@
+docker run -e XDEBUG_CONFIG="remote_host={{172.31.31.154}}" 46b330d71945
+
+docker run -e XDEBUG_CONFIG="remote_host={{172.31.31.154}}" root_php_1
+
+docker-compose run <name in yml> sh -c 'll &&  && <command 3>'
+
+syntax=docker/dockerfile:1
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y supervisorctl
+RUN mkdir -p /var/log/supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY my_first_process my_first_process
+COPY my_second_process my_second_process
+CMD ["/usr/bin/supervisord"]
+
+
+service supervisor status
+
+
+docker run -d --name wordpress-compose_mariadb_1 --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro jrel/systemd-ubuntu:20.04
+
+
+docker exec -ti -d --privileged=true wordpress-compose_mariadb_1
+
+
+docker run -ti -d --privileged ubuntu:20.04 "/sbin/init"
+
+
+
+supervisord -c /etc/supervisor/conf.d/supervisord.conf

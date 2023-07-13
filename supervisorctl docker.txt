@@ -1,0 +1,60 @@
+FROM your-apache-base-image
+
+RUN apt-get update && apt-get install -y supervisor
+
+# Copy your Apache configurations, website files, etc.
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
+
+$ sudo supervisord -c /etc/supervisor/conf.d/supervisord.conf
+
+
+$ sudo supervisorctl reread
+$ sudo supervisorctl update
+
+
+$ docker build -t your-image-name .
+
+
+$ docker run -d app-nginx-1(imagename) /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
+
+
+$ docker exec -it 3ea59f7c009b supervisorctl status
+
+
+
+
+Docker file executable
+
+docker build -t app-nginx-1 .
+
+docker exec -u 0 -it image name /bin/bash
+
+
+docker run -i -t ubuntu /bin/bash
+
+You can use supervisorctl to interact with the Supervisor process control system and manage the services it is monitoring. Some common commands include:
+
+status: Display the status of all processes managed by Supervisor.
+start <process_name>: Start a specific process.
+stop <process_name>: Stop a specific process.
+restart <process_name>: Restart a specific process.
+reread: Reload the Supervisor configuration files.
+update: Apply any changes in the Supervisor configuration and start new processes if necessary.
+tail -f <process_name>: Follow the logs of a spec
+
+
+ubuntu@docker:/etc/supervisor/conf.d$ cat supervisord.conf
+[supervisord]
+nodaemon=true
+
+[program:apache]
+command=/usr/bin/supervisorctl start apache
+command=docker-compose -f /home/ubuntu/app /docker-compose.yml up apache
+directory=/home/ubuntu/app /docker-compose.yml
+autostart=true
+autostop=true
+autorestart=true
+stderr_logfile=/var/log/apache.err.log
+stdout_logfile=/var/log/apache.out.log
