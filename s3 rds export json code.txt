@@ -1,0 +1,46 @@
+
+roles create 
+
+s3 Arn value take in the s3 
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ExportPolicy",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject*",
+                "s3:ListBucket",
+                "s3:GetObject*",
+                "s3:DeleteObject*",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+			    
+                "arn:aws:s3:::rds-backupsnapshot",
+                "arn:aws:s3:::rds-backupsnapshot/*"
+            ]
+        }
+    ]
+}
+
+Trust policy
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": [
+                    "export.rds.amazonaws.com",
+                    "ec2.amazonaws.com"
+                ]
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+
+https://stackoverflow.com/questions/73414514/the-iam-role-arnawsiamxxxxxxxxxxxxrole-xxxxxxxxxxxx-isnt-authorized-to-cal
