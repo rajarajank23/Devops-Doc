@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+        
+        stage('Pre-Build') {
+            steps {
+                sshagent(credentials: ['encyclopedia-dev']) {
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.5.13.6 "bash /home/ubuntu/ubuntu.sh"'
+                }
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main', credentialsId: 'Git', url: 'https://github.com/Exemplifi/ena-mon.git'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                sshagent(credentials: ['encyclopedia-dev']) {
+                    sh 'rsync -avz --exclude="vendor/" -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@13.5.1.6:/var/www/html/'
+                }
+            }
+        }
+        
+        stage('Composer-Update') {
+            steps {
+                sshagent(credentials: ['encyclopedia-dev']) {
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.2.3.96 "bash /home/ubuntu/composer-update.sh"'
+                }
+            }
+        }
+        
+        stage('Post-Build') {
+            steps {
+                sshagent(credentials: ['encyclopedia-dev']) {
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.52.3.96 "bash /home/ubuntu/www-data.sh"'
+                }
+            }
+        }
+        
+    }
+}

@@ -1,0 +1,27 @@
+rm -rf lastbranch
+git clone --single-branch --branch main --depth=1 https://github.com/rajarajank23/lastbranch.git
+cd lastbranch
+rsync -avzr --update -e "ssh -v -o StrictHostKeyChecking=no" $WORKSPACE/lastbranch/ ubuntu@52.63.42.251:/var/www/html/devops/
+
+
+
+
+
+Note: when push the code from jenkins server to dev server 
+
+1.devserver public key add the path /var/lib/jenkins/.ssh/vi id_rsa
+
+2.jenkins server public key put add into path /home/ubunt/.ssh/vi_id_rsa.pub
+
+
+rsync -avz -e "ssh -v -o StrictHostKeyChecking=no" /home/ubuntu/index.html1 ubuntu@13.236.194.147:/var/www/html --delete --rsync-path="sudo rsync"
+
+
+<VirtualHost *:80>
+    ServerName example.com
+    
+    ProxyPass / http://localhost:8080/
+    ProxyPassReverse / http://localhost:8080/
+</VirtualHost>
+
+
