@@ -45,6 +45,7 @@ apt install openjdk-8-jdk
 
 https://itslinuxfoss.com/install-apache-tomcat-server-ubuntu-22-04/ (tomcat installation)
 
+https://vegastack.com/tutorials/how-to-install-tomcat-9-on-ubuntu-22-04/
 
 https://youtu.be/KHnQ0n4deqI(jenkins)
 
