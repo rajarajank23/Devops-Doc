@@ -39,6 +39,16 @@ JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 export JAVA_HOME
 export PATH=$PATH:$JAVA_HOME/bin
 -------------------------------------------------------------------------------------
+New java enviroment set
+vi .bashrc
+JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+export JAVA_HOME
+export PATH=$PATH:$JAVA_HOME/bin
+:wq!
+source ~/.bashrc
+$JAVA_HOME
+This enviroment is worked fine.
+---------------------------------------------------------------------------------------------
 mvn install -Dmaven.plugin.validation=VERBOSE
 
 apt install openjdk-8-jdk
