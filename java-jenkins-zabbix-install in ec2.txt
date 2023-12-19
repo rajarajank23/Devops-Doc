@@ -49,6 +49,11 @@ source ~/.bashrc
 $JAVA_HOME
 This enviroment is worked fine.
 ---------------------------------------------------------------------------------------------
+
+$ sudo chown -R tomcat:tomcat /opt/tomcat/
+$ sudo chmod -R u+x /opt/tomcat/bin
+sudo update-java-alternatives -l
+
 mvn install -Dmaven.plugin.validation=VERBOSE
 
 apt install openjdk-8-jdk
