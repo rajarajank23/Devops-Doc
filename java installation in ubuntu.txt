@@ -75,5 +75,5 @@ http {
 $ sudo nginx -s reload
 
 
-
+https://www.fosstechnix.com/deploy-war-file-in-tomcat-2-steps/
 
