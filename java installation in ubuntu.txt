@@ -1,3 +1,6 @@
+
+https://www.fosstechnix.com/deploy-war-file-in-tomcat-2-steps/
+
 Java root path directory : /opt/tomcat/webapps
 First, as always, update your APT.
 $ sudo apt update
