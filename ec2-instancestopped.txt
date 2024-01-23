@@ -1,0 +1,21 @@
+import boto3
+
+region = 'ap-southeast-2b'
+
+instances = ['i-0c509c6640c2ef560']
+
+ec2 = boto3.client('ec2', region_name=region)
+
+
+def lambda_handler(event, context):
+
+    ec2.stop_instances(InstanceIds=instances)
+
+    print('stopped your instances: ' + str(instances))
+
+
+{"instance-id":"$.detail.instance-id", "state":"$.detail.state", "time":"$.time", "region":"$.region", "account":"$.account"}
+
+"At <time>, the status of your EC2 instance <instance-id> on account <account> in the AWS Region <region> has changed to <state>."
+
+https://repost.aws/knowledge-center/ec2-email-instance-state-change
