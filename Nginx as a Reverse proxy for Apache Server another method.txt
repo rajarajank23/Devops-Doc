@@ -1,0 +1,193 @@
+Installing and Configuring Apache
+Before starting, you will need to install and configure the Apache web server as a backend server running on port 8080.
+
+First, install the Apache webserver package using the command below:
+
+apt-get install apache2 libapache2-mod-php -y
+After installing Apache, you will need to change the Apache default port from 80 to 8080. You can do it by editing /etc/apache2/ports.conf file:
+
+nano /etc/apache2/ports.conf
+Find the following line:
+
+Listen 80
+And, replaced it with the following line:
+
+Listen 8080
+Save and close the file then you will also need to disable the Apache default virtual host file which is configured to listen on port 80.
+
+a2dissite 000-default
+Next, create a new Apache virtual host configuration file that listens on port 8080.
+
+nano /etc/apache2/sites-available/example.conf
+Add the following lines:
+
+<VirtualHost *:8080>
+    ServerAdmin admin@example.com
+    DocumentRoot /var/www/html
+    DirectoryIndex index.html
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+Save and close the file when you are finished.
+
+ServerAdmin – Define the email address of the server administrator.
+DocumentRoot – Path of the Apache default root directory.
+DirectoryIndex – Define the default index file that will load when someone accesses the Apache.
+ErrorLog – Path of the Apache server error log.
+CustomLog – Path of the Apache server access log.
+Now, activate the Apache default virtual host file using the command below:
+
+a2ensite example.conf
+Finally, reload the Apache service to apply the configuration changes:
+
+systemctl reload apache2
+You can also check the status of the Apache service using the following command:
+
+systemctl status apache2
+If everything is fine, you should see the following output:
+
+● apache2.service - The Apache HTTP Server
+     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2021-09-06 10:16:28 UTC; 2s ago
+       Docs: https://httpd.apache.org/docs/2.4/
+    Process: 45027 ExecStart=/usr/sbin/apachectl start (code=exited, status=0/SUCCESS)
+   Main PID: 45031 (apache2)
+      Tasks: 6 (limit: 2341)
+     Memory: 14.6M
+        CPU: 89ms
+     CGroup: /system.slice/apache2.service
+             ├─45031 /usr/sbin/apache2 -k start
+             ├─45032 /usr/sbin/apache2 -k start
+             ├─45033 /usr/sbin/apache2 -k start
+             ├─45034 /usr/sbin/apache2 -k start
+             ├─45035 /usr/sbin/apache2 -k start
+             └─45036 /usr/sbin/apache2 -k start
+
+Aug 17 10:16:28 debian systemd[1]: Starting The Apache HTTP Server...
+Now, verify the Apache listening port using the following command:
+
+ss -antpl | grep -i apache2
+Sample output:
+
+LISTEN    0         511                      *:8080                   *:*        users:(("apache2",pid=10773,fd=4),("apache2",pid=10772,fd=4),("apache2",pid=10771,fd=4),("apache2",pid=10770,fd=4),("apache2",pid=10769,fd=4),("apache2",pid=10768,fd=4))
+Also Read
+
+How to setup Nginx on Windows in Azure/AWS/GCP
+
+Configuring Firewall for Apache and Nginx
+If the UFW firewall is installed and configured in your server then you will need to allow ports 22, 80, 443 and 8080 through the firewall.
+
+Run the following command to allow all ports:
+
+ufw allow 22
+ufw allow 8080
+ufw allow http
+ufw allow https
+Next, reload the UFW firewall using the following command:
+
+ufw disable
+ufw enable
+Next, verify the status of the UFW firewall rules using the following command:
+
+ufw status
+Sample output:
+
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere
+80/tcp                     ALLOW       Anywhere
+443/tcp                    ALLOW       Anywhere
+8080                       ALLOW       Anywhere
+22/tcp (v6)                ALLOW       Anywhere (v6)
+80/tcp (v6)                ALLOW       Anywhere (v6)
+443/tcp (v6)               ALLOW       Anywhere (v6)
+8080 (v6)                  ALLOW       Anywhere (v6)
+Verifying Apache Backend Server
+To verify the Apache web server, open your web browser and type the URL http://your-server-ip:8080 in the address bar. You should see the Apache default page in the following screen:
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Installing and Configuring Nginx as a Reverse Proxy for Apache
+Now, you will need to install the Nginx web server and configure it as a front-end proxy server for the Apache webserver.
+
+First, install the Nginx package using the following command:
+
+apt-get install nginx -y
+After the successful installation, remove the Nginx default virtual host configuration file using the command below:
+
+rm -rf /etc/nginx/sites-enabled/default
+Next, create a new Nginx virtual host configuration file to pass the incoming requests to the Apache backend server:
+
+nano /etc/nginx/conf.d/proxy.conf
+Add the following lines:
+
+server {
+    listen 80;
+    server_name proxy.example.com;
+
+    location / {
+        proxy_pass http://your_server_ip:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+Save and close the file then verify the Nginx for any configuration error using the following command:
+
+nginx -t
+Sample output:
+
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+Next, reload the Nginx service to apply the configuration changes:
+
+systemctl reload nginx
+You can check the status of the Nginx service using the following command:
+
+systemctl status nginx
+If everything is fine, you should see the following output:
+
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sat 2021-09-06 07:33:12 UTC; 5s ago
+       Docs: man:nginx(8)
+    Process: 17460 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 17461 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+   Main PID: 17462 (nginx)
+      Tasks: 2 (limit: 2341)
+     Memory: 2.4M
+        CPU: 50ms
+     CGroup: /system.slice/nginx.service
+             ├─17462 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+             └─17463 nginx: worker process
+
+Sep 04 07:33:12 ubuntu systemd[1]: Starting A high performance web server and a reverse proxy server...
+Sep 04 07:33:12 ubuntu systemd[1]: nginx.service: Failed to parse PID from file /run/nginx.pid: Invalid argument
+Sep 04 07:33:12 ubuntu systemd[1]: Started A high performance web server and a reverse proxy server.
+Also Read
+
+Top 10 Best Open Source Proxy – Self Hosted Proxies
+
+Verify Nginx Front-End Server
+At this point, Nginx has been configured as a front-end server for Apache. Now it’s time to verify whether the Nginx passes the requests to the Apache webserver.
+
+Open the command-line terminal interface and run the following command to test the Nginx proxy:
+
+curl -I http://proxy.example.com
+If everything is fine, you should get the following output:
+
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Thu, 02 Sep 2021 15:27:04 GMT
+Content-Type: text/html
+Content-Length: 10918
+Connection: keep-alive
+Last-Modified: Thu, 02 Sep 2021 15:18:16 GMT
+ETag: "2aa6-5cb04b131c101"
+Accept-Ranges: bytes
+Vary: Accept-Encoding
+You can also test the Nginx proxy using the URL http://proxy.example.com in your web browser. If everything is fine, you should see the Apache backend server default page as shown below:
+
