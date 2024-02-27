@@ -1,0 +1,7 @@
+input path
+
+{"instance-id":"$.detail.instance-id", "state":"$.detail.state", "time":"$.time", "region":"$.region", "account":"$.account"}
+
+Input template:
+
+"At <time>, status of your Stage vision wheel shop <instance-id> in the AWS- Region <region> has changed to <state>."

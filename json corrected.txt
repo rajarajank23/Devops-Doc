@@ -1,0 +1,36 @@
+{
+  "TASK_ARN": "$.detail.taskArn",
+  "PROBLEM": "$.detail-type",
+  "STOP_CODE": "$.detail.stopCode",
+  "STOPPED_REASON": "$.detail.stoppedReason",
+  "STOPPED_TIME": "$.detail.stoppedAt",
+  "CREATED_TIME": "$.detail.createdAt",
+  "STARTED_TIME": "$.detail.startedAt",
+  "AZ": "$.detail.availabilityZone",
+  "SERVICE": "$.detail.group",
+  "ECS_CLUSTER_ARN": "$.detail.clusterArn",
+  "REGION": "$.region"
+}
+
+
+"Stage-Visionwheel shop containerStatus"
+"Problem: <PROBLEM>"
+"Region: <REGION>"
+"Availability-zone: <AZ>"
+"ECS Cluster Arn: <ECS_CLUSTER_ARN>"
+"Service Name: <SERVICE>"
+"Task Arn: <TASK_ARN>"
+"Stopped Reason: <STOPPED_REASON>"
+"Stop Code: <STOP_CODE>"
+"Stopped Time: <STOPPED_TIME>"
+"Created Time: <CREATED_TIME>"
+"Started Time: <STARTED_TIME>"
+
+
+{
+  "source": ["aws.ecs"],
+  "detail-type": ["ECS Task State Change"],
+  "detail": {
+    "lastStatus": ["STOPPED", "RUNNING"]
+  }
+}
