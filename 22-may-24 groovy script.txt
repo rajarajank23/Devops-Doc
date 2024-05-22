@@ -1,0 +1,21 @@
+pipeline {
+  agent any
+ 
+  stages {
+    stage('Checkout') {
+      steps {
+        // Add the missing curly brace here
+        git branch: 'repo', credentialsId: 'mygithub', url: 'https://github.com/rajarajank23/repo.git'
+      }
+    }
+ 
+    stage('Deploy') {
+      steps {
+        sshagent(credentials: ['ubuntu']) {
+          // Inline the ssh command within the 'sh' block
+          sh 'rsync -avz -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@54.174.231.100:/home/ubuntu/test'
+        }
+      }
+    }
+  }
+}
