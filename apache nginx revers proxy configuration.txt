@@ -1,0 +1,35 @@
+ubuntu@ip-172-31-23-246:/etc/nginx/sites-enabled$ cat ssl.conf 
+server {
+    listen 80;
+    server_name 54.198.76.201;
+
+    root /home/ubuntu/test;
+    index index.html index.htm;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080; # This points to Apache running on port 8080
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+------------------------------------------------------------------------------------------------------------------
+ubuntu@ip-172-31-23-246:/etc/apache2/sites-enabled$ cat ssl.conf 
+<VirtualHost *:8080>
+    DocumentRoot /home/ubuntu/test/
+    <Directory /home/ubuntu/test>
+        Options Indexes FollowSymLinks
+        AllowOverride
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+ubuntu@ip-172-31-23-246:/etc/apache2/sites-enabled$
+
+optional in the above apache config file or if any we are facing access issue can use it.
+AllowOverride
+Require all granted
+------------------------------------------------------------------------------------------------------------------
+chmod 755 /home/ubunt
+chmod 755 myproject --->directory
