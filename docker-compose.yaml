@@ -1,0 +1,31 @@
+version: '3'
+services:
+  client:
+    image: bitrix24izaap
+    ports:
+      - '80:80'
+    volumes:
+      - bitrix:/home/ubuntu/www
+  mysql:
+    image: 'mysql:5.7'
+    container_name: mysql_container
+    restart: always
+    ports:
+      - '${MYSQL_PORT}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+    volumes:
+      - database:/var/lib/mysql
+    env_file:
+      - .env
+
+volumes:
+  bitrix: {}
+  database: {}
+
+networks:
+  default:
+    driver: bridge

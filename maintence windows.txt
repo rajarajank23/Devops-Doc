@@ -1,0 +1,12 @@
+stop initiating tasks 1 hour before the window closes
+
+enter the number of hours the maintenance window will run. The value you specify determines the specific end time for the maintenance window based on the time it begins. 
+No maintenance window tasks are permitted to start after the resulting endtime minus the number of hours you specify for Stop initiating tasks in the next step
+
+Stop initiating tasks, enter the number of hours before the end of the maintenance window that the system should stop scheduling new tasks to run
+
+duration field how many hour should run the maintence window
+
+task is specify run on the target selected according to maintenance we define when created window after assign target you assing task to perform window
+
+Scans for or installs patches from a patch baseline to a Linux, Windows or MacOS operating system.
