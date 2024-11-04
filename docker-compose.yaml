@@ -1,31 +1,24 @@
-version: '3'
-services:
-  client:
-    image: bitrix24izaap
-    ports:
-      - '80:80'
-    volumes:
-      - bitrix:/home/ubuntu/www
-  mysql:
-    image: 'mysql:5.7'
-    container_name: mysql_container
-    restart: always
-    ports:
-      - '${MYSQL_PORT}:3306'
-    environment:
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_USER: '${MYSQL_USER}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
-    volumes:
-      - database:/var/lib/mysql
-    env_file:
-      - .env
+version: '3.8'
 
+services:
+  web:
+    image: php:apache # You can replace this with a custom PHP-Apache image
+    ports:
+      - "8000:80" # Maps port 80 on the host to port 80 in the container
+    deploy:
+      mode: replicated
+      replicas: 3 # Number of replicas you want
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    volumes:
+      -  /home/ubuntu/prod/html:/var/www/html # Mounts your PHP application code into the container
 volumes:
-  bitrix: {}
-  database: {}
+  html:
 
 networks:
-  default:
-    driver: bridge
+  webnet:
+    driver: overlay
+
