@@ -1,4 +1,13 @@
 
+Set the java environment
+
+sudo nano /etc/default/tomcat9
+add the below end of file the restart the tomcat service
+JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+sudo systemctl restart tomcat9
+
+
+
 https://www.fosstechnix.com/deploy-war-file-in-tomcat-2-steps/
 
 Java root path directory : /opt/tomcat/webapps
